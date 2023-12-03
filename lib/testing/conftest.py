@@ -1,9 +1,25 @@
 #!/usr/bin/env python3
 
-def pytest_itemcollected(item):
-    par = item.parent.obj
-    node = item.obj
-    pref = par.__doc__.strip() if par.__doc__ else par.__class__.__name__
-    suf = node.__doc__.strip() if node.__doc__ else node.__name__
-    if pref or suf:
-        item._nodeid = ' '.join((pref, suf))
+class MyString:
+    def __init__(self):
+        self._value = None  # Initialize value to None
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, new_value):
+        if not isinstance(new_value, str):
+            print("Value must be a string.")
+        else:
+            self._value = new_value
+
+# Example usage:
+my_str_instance = MyString()
+
+my_str_instance.value = "Hello, World!"  # Valid string
+print(my_str_instance.value)  # Output: Hello, World!
+
+my_str_instance.value = 42  # Invalid value (not a string)
+# Output: Value must be a string.
